@@ -1,3 +1,4 @@
 # MDiSYBD
-## Kazakevich Georgy
-### 253504
+* GoshaShop
+* Kazakevich Georgy
+* 253504
