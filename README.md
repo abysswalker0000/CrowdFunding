@@ -3,8 +3,7 @@
 * Kazakevich Georgy
 * 253504
 
-  
-  ![Bd_lab1](https://github.com/user-attachments/assets/7558b983-2c45-4fb7-936a-e34da3d5023e)
+![bd_lab2](https://github.com/user-attachments/assets/a3242372-5cee-4912-8d83-16729c2b2af6)
 
 ## Entities
 ### 1. User
