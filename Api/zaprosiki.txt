@@ -1,0 +1,222 @@
+### Запросы для тестирования основного функционала и триггеров в Insomnia
+
+#### **1. Регистрация нового пользователя (POST /api/auth/register)**
+```json
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "password123",
+  "role_id": 2
+}
+```
+
+#### **2. Авторизация пользователя (POST /api/auth/login)**
+```json
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+```
+
+---
+
+#### **3. Создание проекта (POST /api/projects/create)**
+```json
+POST http://localhost:3000/api/projects/create
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "title": "Build a Community Center",
+  "description": "A project to build a new community center in our town.",
+  "goal_amount": 10000,
+  "category_id": 1
+}
+```
+
+---
+
+#### **4. Модерация проекта (PUT /api/projects/:project_id/moderate)**
+```json
+PUT http://localhost:3000/api/projects/1/moderate
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "admin_id": 1,
+  "status": "approved",
+  "review": "Project looks good and is approved."
+}
+```
+
+---
+
+#### **5. Получение проектов по категории (GET /api/projects/category/:category_id)**
+```json
+GET http://localhost:3000/api/projects/category/1
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+#### **6. Добавление оплаты (POST /api/payments/create)**
+```json
+POST http://localhost:3000/api/payments/create
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "user_id": 2,
+  "project_id": 1,
+  "amount": 500
+}
+```
+
+---
+
+#### **7. Получение инвесторов проекта (GET /api/projects/:project_id/investors)**
+```json
+GET http://localhost:3000/api/projects/1/investors
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+#### **8. Уведомление инвесторов проекта (POST /api/projects/:project_id/notify-investors)**
+```json
+POST http://localhost:3000/api/projects/1/notify-investors
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+#### **9. Добавление комментария (POST /api/comments/add)**
+```json
+POST http://localhost:3000/api/comments/add
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "user_id": 2,
+  "project_id": 1,
+  "content": "This is a fantastic project. Can't wait to see it come to life!"
+}
+```
+
+---
+
+#### **10. Просмотр комментариев к проекту (GET /api/comments/:project_id)**
+```json
+GET http://localhost:3000/api/comments/1
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+#### **11. Добавление обновления проекта (POST /api/projects/:project_id/updates)**
+```json
+POST http://localhost:3000/api/projects/1/updates
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "title": "Update #1",
+  "content": "We’ve started the initial groundwork for the community center."
+}
+```
+
+---
+
+#### **12. Получение обновлений проекта (GET /api/projects/:project_id/updates)**
+```json
+GET http://localhost:3000/api/projects/1/updates
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+#### **13. Удаление проекта (DELETE /api/projects/:project_id/delete)**
+```json
+DELETE http://localhost:3000/api/projects/1/delete
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+#### **14. Добавление награды для спонсоров (POST /api/rewards/create)**
+```json
+POST http://localhost:3000/api/rewards/create
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "project_id": 1,
+  "description": "Early Bird Access",
+  "amount_required": 100
+}
+```
+
+---
+
+#### **15. Просмотр уведомлений (GET /api/users/:user_id/notifications)**
+```json
+GET http://localhost:3000/api/users/2/notifications
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+#### **16. Пометка всех уведомлений как прочитанных (PUT /api/notifications/mark-all-read)**
+```json
+PUT http://localhost:3000/api/notifications/mark-all-read
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "user_id": 2
+}
+```
+
+---
+
+#### **17. Просмотр логов пользователя (GET /api/users/:user_id/logs)**
+```json
+GET http://localhost:3000/api/users/1/logs
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+#### **18. Просмотр финансового отчета проекта (GET /api/projects/:project_id/financial-report)**
+```json
+GET http://localhost:3000/api/projects/1/financial-report
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+### Триггеры
+#### **1. Автоматическое обновление суммы проекта**
+- Проверяется автоматически при добавлении оплаты через запрос:
+```json
+POST http://localhost:3000/api/payments/create
+Content-Type: application/json
+
+{
+  "user_id": 2,
+  "project_id": 1,
+  "amount": 500
+}
+```
+
+#### **2. Уведомление спонсоров**
+- Триггер срабатывает при достижении цели проекта. Для проверки можно вручную достичь целевой суммы с помощью запросов оплаты.
+
